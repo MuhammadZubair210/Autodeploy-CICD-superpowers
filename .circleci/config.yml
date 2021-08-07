@@ -24,7 +24,7 @@ version: 2.1
 #           command: |
 #             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
 #             SUCCESS = 1
-#             if(( $SUCCESS==1 )); 
+#             if(( $SUCCESS==1 ));
 #             then
 #             #  cd ~/project/backend
 #             #  npm install
@@ -40,10 +40,14 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: Build front-end
+          name: install front-end dependencies
           command: |
-            # Your code here
-            exit 1
+            npm i
+      - run:
+          name: test front-end
+          command: |
+            npm run test
+
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -108,7 +112,7 @@ jobs:
 #               --template-file .circleci/files/backend.yml \
 #               #--tags project=your-tag \
 #               # --stack-name "your back-end stack name with workflow id" \
-#               # --parameter-overrides ID="your workflow id"  
+#               # --parameter-overrides ID="your workflow id"
 #               exit 1
 #       - run:
 #           name: Ensure front-end infrastructure exist
@@ -117,7 +121,7 @@ jobs:
 #               --template-file .circleci/files/frontend.yml \
 #               #--tags project=your-tag \
 #               # --stack-name "your front-end stack name with workflow id" \
-#               # --parameter-overrides ID="your workflow id"  
+#               # --parameter-overrides ID="your workflow id"
 #               exit 1
 #       - run:
 #           name: Add back-end ip to ansible inventory
