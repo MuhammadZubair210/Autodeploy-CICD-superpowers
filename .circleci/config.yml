@@ -31,7 +31,6 @@ commands:
             #  Add revert code here. You can find this in the Getting Started section.
               exit 1
             fi
-
 jobs:
   build-frontend:
     docker:
