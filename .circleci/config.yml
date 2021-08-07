@@ -43,31 +43,31 @@ jobs:
           name: install front-end dependencies
           command: |
             npm i
-      # - run:
-      #     name: test front-end
-      #     command: |
-      #       npm run test
+      - run:
+          name: test front-end
+          command: |
+            npm run test
 
       # - save_cache:
       #     paths: [frontend/node_modules]
       #     key: frontend-build
 
 
-  test-frontend:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys: [frontend-build]
-      # - run:
-      #     name: install front-end dependencies
-      #     command: |
-      #       npm i
-      - run:
-          name: test front-end
-          command: |
-            npm run test
+  # test-frontend:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     # - checkout
+  #     # - restore_cache:
+  #     #     keys: [frontend-build]
+  #     # - run:
+  #     #     name: install front-end dependencies
+  #     #     command: |
+  #     #       npm i
+  #     - run:
+  #         name: test front-end
+  #         command: |
+  #           npm run test
 
       # - save_cache:
       #     paths: [frontend/node_modules]
@@ -290,9 +290,9 @@ workflows:
   default:
     jobs:
       - build-frontend
-      - test-frontend:
-          requires:
-            - build-frontend
+      # - test-frontend:
+      #     requires:
+      #       - build-frontend
 
       # - build-backend
       # - test-frontend:
