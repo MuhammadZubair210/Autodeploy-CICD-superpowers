@@ -43,8 +43,8 @@ jobs:
           name: Test front-end
           command: |
             cd frontend
-            npm i
-            npm run test
+            sudo npm i
+            sudo npm run test
       # - run:
       #     name: test front-end
       #     command: |
