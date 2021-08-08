@@ -130,11 +130,9 @@ jobs:
       - run:
           name: Scan Back-end
           command: |
-            # npm run test
             cd backend
-            # sudo npm i
-            npm audit --fix
-            # audit-level=critical
+            npm update
+            npm audit --audit-level=critical
 
 #   deploy-infrastructure:
 #     docker:
