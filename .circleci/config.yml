@@ -35,32 +35,25 @@ jobs:
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
-    working_directory: /cdond-c3-projectstarter/front-end
     steps:
       - checkout
-      # :
-          # path: cdond-c3-projectstarter
       - restore_cache:
-          keys: [build-frontend]
-
-      # - run:
-      #     name: Permission fixation
-      #     command: |
-      #       chown -R $USER:$USER cdond-c3-projectstarter
-
+          keys: [frontend-build]
       - run:
-          name: install front-end dependencies
+          name: Test front-end
           command: |
+            cd frontend
             npm i
-      - run:
-          name: test front-end
-          command: |
             npm run test
-
+      # - run:
+      #     name: test front-end
+      #     command: |
+      #       npm run test
 
       # - save_cache:
       #     paths: [frontend/node_modules]
       #     key: frontend-build
+
 
   # test-frontend:
   #   docker:
@@ -78,9 +71,9 @@ jobs:
   #         command: |
   #           npm run test
 
-  # - save_cache:
-  #     paths: [frontend/node_modules]
-  #     key: frontend-build
+      # - save_cache:
+      #     paths: [frontend/node_modules]
+      #     key: frontend-build
 
   # build-backend:
   #   docker:
