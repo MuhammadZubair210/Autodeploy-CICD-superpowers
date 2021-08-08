@@ -35,7 +35,7 @@ jobs:
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
-    working_directory: ~/cdond-c3-projectstarter/front-end
+    working_directory: ../cdond-c3-projectstarter/front-end
     steps:
       - checkout
       - restore_cache:
