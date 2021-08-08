@@ -114,17 +114,18 @@ jobs:
       - checkout
       # - restore_cache:
       #     keys: ["frontend-build"]
-      # - run:
-      #     name: Scan Frontend-end
-      #     command: |
-      #       # npm run test
-      #       cd frontend
-      #       # sudo npm i
       - run:
-          cd frontend
-          npm audit
-          #  --audit-level=critical
-          # audit-level=critical
+          name: Scan Frontend-end
+          command: |
+            # npm run test
+            cd frontend
+            npm audit --audit-level=critical
+
+
+      #     cd frontend
+      #     npm audit
+      #  --audit-level=critical
+      # audit-level=critical
 
   scan-backend:
     docker:
