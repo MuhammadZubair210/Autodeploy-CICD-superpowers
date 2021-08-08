@@ -35,7 +35,7 @@ jobs:
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
-    # working_directory: cdond-c3-projectstarter/front-end
+    working_directory: /cdond-c3-projectstarter/front-end
     steps:
       - checkout
       # :
@@ -43,10 +43,10 @@ jobs:
       - restore_cache:
           keys: [build-frontend]
 
-      - run:
-          name: Permission fixation
-          command: |
-            chown -R $USER:$USER cdond-c3-projectstarter
+      # - run:
+      #     name: Permission fixation
+      #     command: |
+      #       chown -R $USER:$USER cdond-c3-projectstarter
 
       - run:
           name: install front-end dependencies
