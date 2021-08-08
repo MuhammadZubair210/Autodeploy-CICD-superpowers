@@ -119,8 +119,7 @@ jobs:
           command: |
             # npm run test
             cd frontend
-            npm audit
-          #  --audit-level=critical
+            npm audit --audit-level=critical
 
 
       #     cd frontend
