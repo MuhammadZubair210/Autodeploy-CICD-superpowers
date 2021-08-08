@@ -40,41 +40,31 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: Test front-end
+          name: Build front-end
           command: |
             cd frontend
             sudo npm i
+            sudo npm run build
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-build
+
+  test-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: Test front-end
+          command: |
+            npm run test
             exit 0
-            # sudo npm run test
-      # - run:
-      #     name: test front-end
-      #     command: |
-      #       npm run test
 
-      # - save_cache:
-      #     paths: [frontend/node_modules]
-      #     key: frontend-build
-
-
-  # test-frontend:
-  #   docker:
-  #     - image: circleci/node:13.8.0
-  #   steps:
-  #     # - checkout
-  #     # - restore_cache:
-  #     #     keys: [frontend-build]
-  #     # - run:
-  #     #     name: install front-end dependencies
-  #     #     command: |
-  #     #       npm i
-  #     - run:
-  #         name: test front-end
-  #         command: |
-  #           npm run test
-
-      # - save_cache:
-      #     paths: [frontend/node_modules]
-      #     key: frontend-build
+  # - save_cache:
+  #     paths: [frontend/node_modules]
+  #     key: frontend-build
 
   # build-backend:
   #   docker:
@@ -293,9 +283,9 @@ workflows:
   default:
     jobs:
       - build-frontend
-      # - test-frontend:
-      #     requires:
-      #       - build-frontend
+      - test-frontend:
+          requires:
+            - build-frontend
 
       # - build-backend
       # - test-frontend:
