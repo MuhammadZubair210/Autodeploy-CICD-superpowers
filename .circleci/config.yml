@@ -37,7 +37,9 @@ jobs:
       - image: circleci/node:13.8.0
     working_directory: cdond-c3-projectstarter/front-end
     steps:
-      - checkout
+      - checkout:
+          path:
+            cdond-c3-projectstarter
       - restore_cache:
           keys: [build-frontend]
       - run:
