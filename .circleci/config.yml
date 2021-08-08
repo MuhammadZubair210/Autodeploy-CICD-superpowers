@@ -120,7 +120,7 @@ jobs:
             # npm run test
             cd frontend
             # sudo npm i
-            npm audit --fix
+            sudo npm audit --fix
             # audit-level=critical
 
   scan-backend:
