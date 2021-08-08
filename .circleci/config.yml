@@ -83,11 +83,10 @@ jobs:
           keys: [frontend-build]
       # Your job code here
       - run:
-        name: Test Frontend
-        command: |
-          # npm run test
-          cd frontend
-          exit 0
+          name: Test Frontend
+          command: |
+            cd frontend
+            exit 0
 
   test-backend:
     docker:
@@ -101,11 +100,11 @@ jobs:
           keys: [backend-build]
       # Your job code here
       - run:
-        name: Test Back-end
-        command: |
-          # npm run test
-          cd backend
-          npm run build
+          name: Test Back-end
+          command: |
+            # npm run test
+            cd backend
+            npm run build
 
 #   scan-frontend:
 #     docker:
