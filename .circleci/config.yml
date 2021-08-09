@@ -52,6 +52,24 @@ jobs:
           paths: [frontend/dist]
           key: frontend-dist
 
+  # build-backend:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys: [backend-build]
+  #     - run:
+  #         name: Back-end build
+  #         command: |
+  #           # Your code here
+  #           cd backend
+  #           sudo npm install
+  #           sudo npm update
+  #           sudo npm run build
+  #     - save_cache:
+  #         paths: [backend/node_modules]
+  #         key: backend-build
   build-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -62,14 +80,15 @@ jobs:
       - run:
           name: Back-end build
           command: |
-            # Your code here
-            cd backend
-            sudo npm install
-            sudo npm update
-            sudo npm run build
+             cd backend
+             sudo npm install
+             sudo npm run build
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - save_cache:
+          paths: [backend/dist]
+          key: backend-dist
 
   test-frontend:
     docker:
