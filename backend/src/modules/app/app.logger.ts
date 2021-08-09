@@ -1,5 +1,5 @@
 import { LoggerService, Injectable } from '@nestjs/common';
-import * as winston from 'winston';
+import * as winston from "winston";
 import { Loggly } from 'winston-loggly-bulk';
 import { SlackWebHook } from 'winston-slack-webhook';
 import * as dotenv from 'dotenv';
