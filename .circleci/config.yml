@@ -204,6 +204,7 @@ jobs:
           id: <<pipeline.parameters.workflow-id>>
           when: on_fail
 
+
 #   configure-infrastructure:
 #     docker:
 #       # Docker image here that supports Ansible
