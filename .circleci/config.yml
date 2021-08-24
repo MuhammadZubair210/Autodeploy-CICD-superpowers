@@ -27,15 +27,15 @@ commands:
       - run:
           name: Destroy project backend cfn stack
           command: |
-            aws cloudformation delete-stack --stack-name project-backend-<< parameters.id >>
+            aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.id >>
           environment:
             TERM: xterm-256color
           when: << parameters.when >>
       - run:
           name: Destroy project frontend cfn stack and S3 bucket
           command: |
-            aws s3 rm s3://project-<< parameters.id >> --recursive
-            aws cloudformation delete-stack --stack-name project-frontend-<< parameters.id >>
+            aws s3 rm s3://udapeople-<< parameters.id >> --recursive
+            aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.id >>
           environment:
             TERM: xterm-256color
           when: << parameters.when >>
@@ -175,8 +175,8 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
-              --tags project=project-backend-<< pipeline.parameters.workflow-id >> \
-              --stack-name "project-backend-<< pipeline.parameters.workflow-id >>" \
+              --tags project=udapeople-backend-<< pipeline.parameters.workflow-id >> \
+              --stack-name "udapeople-backend-<< pipeline.parameters.workflow-id >>" \
               --parameter-overrides ID="<< pipeline.parameters.workflow-id >>"
               exit 1
       - run:
@@ -184,8 +184,8 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
-              --tags project=project-frontend-<< pipeline.parameters.workflow-id >> \
-              --stack-name "project-frontend-<< pipeline.parameters.workflow-id >>" \
+              --tags project=udapeople-frontend-<< pipeline.parameters.workflow-id >> \
+              --stack-name "udapeople-frontend-<< pipeline.parameters.workflow-id >>" \
               --parameter-overrides ID="<< pipeline.parameters.workflow-id >>"  
               exit 1
       - run:
@@ -193,7 +193,7 @@ jobs:
           command: |
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:project,Values=project-backend-<< pipeline.parameters.workflow-id >>" \
+              --filters "Name=tag:project,Values=udapeople-backend-<< pipeline.parameters.workflow-id >>" \
               --output text >> .circleci/ansible/inventory.txt
             cat inventory.txt
             ls -la
