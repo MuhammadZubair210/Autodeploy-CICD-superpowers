@@ -178,7 +178,6 @@ jobs:
               --tags project=udapeople-backend-<< pipeline.parameters.workflow-id >> \
               --stack-name "udapeople-backend-<< pipeline.parameters.workflow-id >>" \
               --parameter-overrides ID="<< pipeline.parameters.workflow-id >>"
-              exit 1
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -187,7 +186,6 @@ jobs:
               --tags project=udapeople-frontend-<< pipeline.parameters.workflow-id >> \
               --stack-name "udapeople-frontend-<< pipeline.parameters.workflow-id >>" \
               --parameter-overrides ID="<< pipeline.parameters.workflow-id >>"  
-              exit 1
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -197,7 +195,6 @@ jobs:
               --output text >> .circleci/ansible/inventory.txt
             cat inventory.txt
             ls -la
-            exit 1
       - persist_to_workspace:
           root: .
           paths:
