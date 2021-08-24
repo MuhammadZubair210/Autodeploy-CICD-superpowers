@@ -232,7 +232,7 @@ jobs:
             pwd &&
             ls -la
             cat inventory.txt
-            sudo ansible-playbook -i inventory.txt configure-server.yml
+            ansible-playbook -i inventory.txt configure-server.yml
       # - destroy_environment:
       #     id: <<pipeline.parameters.workflow-id>>
       #     when: on_fail
