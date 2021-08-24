@@ -8,6 +8,14 @@ executors:
     docker:
       - image: amazon/aws-cli
 
+parameters:
+  workflow-id:
+    type: string
+    default: "9767"
+  # memstash-token:
+  #   type: string
+  #   default: "b9461c43-6888-4d04-8e76-7beeddbb863c"
+
 # commands:
 #   destroy-environment:
 #     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
