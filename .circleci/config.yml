@@ -206,9 +206,9 @@ jobs:
           paths:
             - .circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure
-      - destroy_environment:
-          id: <<pipeline.parameters.workflow-id>>
-          when: on_fail
+      # - destroy_environment:
+      #     id: <<pipeline.parameters.workflow-id>>
+      #     when: on_fail
 
   configure-infrastructure:
     executor: python
@@ -216,7 +216,7 @@ jobs:
       # Checkout code from git
       - checkout
       - add_ssh_keys:
-          fingerprints: ["1b:c4:b8:a3:65:de:4b:09:c7:4f:8d:58:79:1a:cf:cc"]
+          fingerprints: ["43:f5:17:fc:61:69:1e:19:96:41:47:37:d0:f7:a3:45"]
       - attach_workspace:
           at: .
       - run:
@@ -232,12 +232,12 @@ jobs:
             pwd &&
             ls -la
             cat inventory.txt
-            sudo ansible-playbook -i inventory.txt configure-server.yml
+            ansible-playbook -i inventory.txt configure-server.yml
       # - destroy_environment:
       #     id: <<pipeline.parameters.workflow-id>>
       #     when: on_fail
 
-#       # Here's where you will add some code to rollback on failure
+      # Here's where you will add some code to rollback on failure
 
 #   run-migrations:
 #     docker:
