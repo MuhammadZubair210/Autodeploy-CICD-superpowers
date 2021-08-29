@@ -247,11 +247,6 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: Run migrations
-          working_directory: ./backend
-          command: |
-            npm run migrations > migration_status
-      - run:
           name: Install AWS CLI dependencies
           working_directory: /tmp
           command: |
@@ -260,6 +255,11 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
+      - run:
+          name: Run migrations
+          working_directory: ./backend
+          command: |
+            npm run migrations > migration_status
       # - run:
       #     name: Send migration results to memstash
       #     command: |
