@@ -1,5 +1,5 @@
 
-> glee2@1.0.0 premigrations
+> glee2@1.0.0 premigrations:revert
 > npm run build
 
 
@@ -7,6 +7,6 @@
 > tsc
 
 
-> glee2@1.0.0 migrations
-> ts-node -r dotenv/config node_modules/.bin/typeorm migration:run
+> glee2@1.0.0 migrations:revert
+> ts-node -r dotenv/config node_modules/.bin/typeorm migration:revert
 
