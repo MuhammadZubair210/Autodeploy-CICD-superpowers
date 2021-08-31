@@ -239,22 +239,50 @@ jobs:
 
       # Here's where you will add some code to rollback on failure
 
-#   run-migrations:
-#     docker:
-#       # Docker image here that supports NodeJS
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Run migrations
-#           command: |
-#             # Your code here
-#             exit 1
-#       - run:
-#           name: Send migration results to memstash
-#           command: |
-#             # Your code here
-#             exit 1
-#       # Here's where you will add some code to rollback on failure
+  run-migrations:
+    executor: node
+    steps:
+      # Checkout code from git
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: Install AWS CLI dependencies
+          working_directory: /tmp
+          command: |
+            ls -la
+            sudo apt-get update && sudo apt-get install -yy less
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+      - run:
+          name: Run migrations
+          working_directory: ./backend
+          command: |
+            sudo npm run migrations > migration_status
+      # - run:
+      #     name: Send migration results to memstash
+      #     command: |
+      #       # Your code here
+      #       exit 1
+      - run:
+          name: Send migration results to memstash
+          working_directory: ./backend
+          command: |
+            if grep -q "has been executed successfully" migration_status
+            then
+              echo "DB migration was successful, will update memstash..."
+              curl -H "Content-Type: text/plain" -H "token: cacfed63-3a98-4951-958f-af5e5aa339b3" --request PUT --data "success" https://api.memstash.io/values/DB_MIGRATION_<<pipeline.parameters.workflow-id>>
+            else
+              echo "DB migration failed, please verify setup! Probably the database already exists. Verify setup!"
+              curl -H "Content-Type: text/plain" -H "token: cacfed63-3a98-4951-958f-af5e5aa339b3" --request PUT --data "failure" https://api.memstash.io/values/DB_MIGRATION_<<pipeline.parameters.workflow-id>>
+            fi
+            echo "WorkflowID=<<pipeline.parameters.workflow-id>>"
+      # Here's where you will add some code to rollback on failure
+      - destroy_environment:
+          id: <<pipeline.parameters.workflow-id>>
+          when: on_fail
+      # Here's where you will add some code to rollback on failure
 
 #   deploy-frontend:
 #     docker:
@@ -371,8 +399,8 @@ workflows:
               only: [test-feature-branch]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
       # - deploy-frontend:
       #     requires: [run-migrations]
       # - deploy-backend:
