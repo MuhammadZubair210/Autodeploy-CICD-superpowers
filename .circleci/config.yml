@@ -279,9 +279,9 @@ jobs:
             fi
             echo "WorkflowID=<<pipeline.parameters.workflow-id>>"
       # Here's where you will add some code to rollback on failure
-      - destroy_environment:
-          id: <<pipeline.parameters.workflow-id>>
-          when: on_fail
+      # - destroy_environment:
+      #     id: <<pipeline.parameters.workflow-id>>
+      #     when: on_fail
       # Here's where you will add some code to rollback on failure
 
 #   deploy-frontend:
