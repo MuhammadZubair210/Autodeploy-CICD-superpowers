@@ -259,7 +259,7 @@ jobs:
           name: Run migrations
           working_directory: ./backend
           command: |
-            sudo npm run migrations > migration_status
+            npm run migrations > migration_status
       # - run:
       #     name: Send migration results to memstash
       #     command: |
