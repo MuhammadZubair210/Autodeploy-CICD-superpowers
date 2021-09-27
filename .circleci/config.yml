@@ -356,7 +356,7 @@ jobs:
           working_directory: ./.circleci/ansible
           command: |
             cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-server.yml 
+            ansible-playbook -i inventory.txt deploy-backend.yml 
 
 
 #   smoke-test:
