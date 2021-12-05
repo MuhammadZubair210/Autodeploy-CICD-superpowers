@@ -187,6 +187,14 @@ jobs:
               --stack-name "udapeople-backend-<< pipeline.parameters.workflow-id >>" \
               --parameter-overrides ID="<< pipeline.parameters.workflow-id >>"
       - run:
+          name: Save backend URL in memstash
+          command: |
+            BACKEND_IP=$(aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:project,Values=udapeople-backend-<<pipeline.parameters.workflow-id>>" \
+              --output text)
+            curl -H "Content-Type: text/plain" -H "token: 3b9cb796-d840-441f-aa56-ee81244df30c" --request PUT --data "http://$BACKEND_IP:3030" https://api.memstash.io/values/BACKEND_URL  
+      - run:
           name: Ensure front-end infrastructure exist
           working_directory: ./.circleci/files
           command: |
