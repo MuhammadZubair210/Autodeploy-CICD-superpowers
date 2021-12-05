@@ -171,7 +171,6 @@ jobs:
   deploy-infrastructure:
     executor: aws
     steps:
-      # Checkout code from git
       - checkout
       - run:
           name: Install dependencies
