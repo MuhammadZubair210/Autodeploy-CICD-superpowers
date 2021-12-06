@@ -396,39 +396,57 @@ jobs:
           id: <<pipeline.parameters.workflow-id>>
           when: on_fail
 
-#   cloudfront-update:
-#     docker:
-#       # Docker image here that supports AWS CLI
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Update cloudfront distribution
-#           command: |
-#             # your code here
-#       # Here's where you will add some code to rollback on failure
+  cloudfront-update:
+    executor: aws
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            yum install -y tar gzip curl
+            curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+            yum install -y nodejs
+      - run:
+          name: Store old WorkflowID in memstash for cleanup phase
+          working_directory: ./.circleci/files
+          command: |
+            WorkflowID=$(aws cloudformation \
+              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+              --no-paginate --output text)
+            curl -H "Content-Type: text/plain" -H "token: 55a8d1b0-b3a5-4c20-8c19-0714e09338c9" --request PUT --data "$WorkflowID" https://api.memstash.io/values/WorkflowID
+      - run:
+          name: Update cloudfront distribution
+          working_directory: ./.circleci/files
+          command: |
+            aws cloudformation deploy \
+              --template-file cloudfront.yml \
+              --stack-name udapeople-cloudfront-production \
+              --parameter-overrides WorkflowID="<<pipeline.parameters.workflow-id>>" \
+              --tags project=udapeople
+      - revert_migrations:
+          id: <<pipeline.parameters.workflow-id>>
+          when: on_fail
 
-# cleanup:
-#   docker:
-#     # Docker image here
-#   steps:
-#     # Checkout code from git
-#     - run:
-#         name: Get old stack workflow id
-#         command: |
-#           # your code here
-#           export OldWorkflowID="the id here"
-#           export STACKS=[] #put the list of stacks here
-#     - run:
-#         name: Remove old stacks and files
-#         command: |
-#           if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
-#           then
-#             # your code here
-#           fi
+  cleanup:
+    executor: aws
+    steps:
+      - checkout
+      - run:
+          name: Clean up old environment
+          command: |
+            OldWorkflowID=$(curl -H "token: 55a8d1b0-b3a5-4c20-8c19-0714e09338c9" --request GET https://api.memstash.io/values/WorkflowID)
+            CurrentWorkflowID=<<pipeline.parameters.workflow-id>>
+            if [[ "$CurrentWorkflowID" != "$OldWorkflowID" ]]
+            then
+              echo "$OldWorkflowID!=$CurrentWorkflowID => will delete old version"
+              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
+              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+            else
+              echo "$OldWorkflowID==$CurrentWorkflowID => nothing needs to be done..."
+            fi
+          environment:
+            TERM: xterm-256color
 
 workflows:
   default:
@@ -458,7 +476,7 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [smoke-test]
-      # - cleanup:
-      #     requires: [cloudfront-update]
+      - cloudfront-update:
+          requires: [smoke-test]
+      - cleanup:
+          requires: [cloudfront-update]
