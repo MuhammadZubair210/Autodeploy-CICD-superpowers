@@ -4,7 +4,7 @@
   - name: "copy backend binaries"
     become: yes
     synchronize:
-      src: ../../backend
+      src: ../../backend/dist
       dest: /home/ubuntu/uda_app
       recursive: true
 
