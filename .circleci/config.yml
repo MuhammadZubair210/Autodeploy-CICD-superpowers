@@ -138,9 +138,9 @@ jobs:
           name: Test Back-end
           command: |
             # npm run test
-            # cd backend
-            # npm run test
-            exit 0
+            cd backend
+            npm run test
+            # exit 0
   scan-frontend:
     docker:
       - image: circleci/node:13.8.0
