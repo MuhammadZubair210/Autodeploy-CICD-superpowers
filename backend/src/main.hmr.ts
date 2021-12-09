@@ -9,6 +9,7 @@ async function bootstrap() {
   const config: ConfigService = app.get('ConfigService');
   await app.listen(config.PORT);
 
+  
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());
