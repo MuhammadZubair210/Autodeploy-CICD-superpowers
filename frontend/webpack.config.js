@@ -5,7 +5,7 @@ require('dotenv').config();
 
 // variables
 var isProduction =
-  process.argv.indexOf('-p') >= 0 || process.env.NODE_ENV === 'production';
+  process.argv.indexOf('-p') >= 0 || process.env.NODE_ENV === 'NODE_ENV';
 var sourcePath = path.join(__dirname, './src');
 var outPath = path.join(__dirname, './dist');
 
@@ -152,7 +152,7 @@ module.exports = {
   plugins: [
     new Dotenv(),
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+      NODE_ENV: 'production', // use 'development' unless process.env.NODE_ENV is defined
       DEBUG: false,
       API_URL: process.env.API_URL,
       WP_HELP_EMAIL: 'info@acklenavenue.com',
