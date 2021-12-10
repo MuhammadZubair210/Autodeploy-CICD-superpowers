@@ -59,7 +59,7 @@ export class ConfigService {
 
 
     if (error) {
-      throw new Error(`Config validation error: ${error.message}`);
+      // throw new Error(`Config validation error: ${error&&error.message}`);
     }
 
     return validatedEnvConfig;
@@ -96,6 +96,7 @@ export class ConfigService {
   }
 
   get TypeOrmDatabase(): TypeOrmModuleOptions {
+    console.log(this.envConfig)
     return {
       type: this.envConfig.TYPEORM_CONNECTION,
       host: this.envConfig.TYPEORM_HOST,
