@@ -357,7 +357,7 @@ jobs:
             # curl -o- -L https://yarnpkg.com/install.sh | bash
             # source ~/.bashrc
             cd backend
-            npm install -g typescript
+            # npm install -g typescript
             npm i
             npm run build
             # npm i -g yarn
