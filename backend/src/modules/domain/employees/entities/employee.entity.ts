@@ -98,7 +98,7 @@ export class Employee extends AggregateRoot<number> {
   public city: string;
 
   @Column()
-  public effectiveDate: any;
+  public effectiveDate: Date;
 
   @Column('decimal')
   public salary: number;
