@@ -61,8 +61,11 @@ export class Employee extends AggregateRoot<number> {
   @Column({ length: 50, nullable: true, default: '' })
   public personalEmail: string;
 
+  // @Column({ nullable: true })
+  // public birthdate: any;
+
   @Column({ nullable: true })
-  public birthdate: any;
+  public birthdate: Date;
 
   @Column()
   public startDate: Date;
