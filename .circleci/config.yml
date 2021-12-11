@@ -357,9 +357,9 @@ jobs:
             # curl -o- -L https://yarnpkg.com/install.sh | bash
             # source ~/.bashrc
             cd backend
-            npm i
-            npm run build
-            # yarn install
+            # npm i
+            # npm run build
+            yarn install
             # yarn build
       - run:
           name: Deploy backend
