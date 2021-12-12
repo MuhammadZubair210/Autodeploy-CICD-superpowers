@@ -55,11 +55,12 @@ export class ConfigService {
       // AUTH0_DOMAIN: Joi.string().required(),
       // AUTH0_AUDIENCE: Joi.string().required(),
     }).unknown();
-    const { error, value: validatedEnvConfig } = envVarsSchema.validate(envConfig);
-
+    const { error, value: validatedEnvConfig } = envVarsSchema.validate(
+      envConfig,
+    );
 
     if (error) {
-      // throw new Error(`Config validation error: ${error&&error.message}`);
+      throw new Error(`Config validation error: ${error.message}`);
     }
 
     return validatedEnvConfig;
@@ -96,7 +97,6 @@ export class ConfigService {
   }
 
   get TypeOrmDatabase(): TypeOrmModuleOptions {
-    console.log(this.envConfig)
     return {
       type: this.envConfig.TYPEORM_CONNECTION,
       host: this.envConfig.TYPEORM_HOST,

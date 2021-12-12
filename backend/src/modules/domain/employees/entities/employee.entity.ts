@@ -61,6 +61,9 @@ export class Employee extends AggregateRoot<number> {
   @Column({ length: 50, nullable: true, default: '' })
   public personalEmail: string;
 
+  // @Column({ nullable: true })
+  // public birthdate: any;
+
   @Column({ nullable: true })
   public birthdate: Date;
 
@@ -120,7 +123,7 @@ export enum SalaryType {
   HOURLY = 'hourly',
 }
 
-export function getDateFromString(date: string): Date {
+export function getDateFromString(date: string): any {
   return moment(date).format('M/D/YYYY');
 }
 
