@@ -354,15 +354,9 @@ jobs:
       - run:
           name: Back-end build
           command: |
-            # curl -o- -L https://yarnpkg.com/install.sh | bash
-            # source ~/.bashrc
             cd backend
-            # npm install -g typescript
-            npm i
+            npm install
             npm run build
-            # npm i -g yarn
-            # yarn install
-            # yarn build
       - run:
           name: Deploy backend
           working_directory: ./.circleci/ansible
