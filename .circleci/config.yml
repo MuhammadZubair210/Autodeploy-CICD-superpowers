@@ -357,6 +357,7 @@ jobs:
             cd backend
             npm install
             npm run build
+            
       - run:
           name: Deploy backend
           working_directory: ./.circleci/ansible
