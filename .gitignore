@@ -16,7 +16,6 @@ npm-debug.log*
 .tmp/
 .versions/
 coverage/
-dist/
 node_modules/
 tmp/
 temp/
@@ -67,4 +66,3 @@ UserInterfaceState.xcuserstate
 node_modules
 
 .env
-dist
