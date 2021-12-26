@@ -400,7 +400,6 @@ jobs:
           id: <<pipeline.parameters.workflow-id>>
           when: on_fail
 
-
   cloudfront-update:
     executor: aws
     steps:
