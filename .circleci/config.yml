@@ -154,8 +154,8 @@ jobs:
             # exit 0
             # # npm run test
             cd frontend
-            npm update
-            npm audit --audit-level=critical
+            # npm update
+            npm audit fix
 
   scan-backend:
     docker:
@@ -168,9 +168,9 @@ jobs:
           name: Scan Back-end
           command: |
             cd backend
-            npm update
-            npm audit --audit-level=critical
-
+            # npm update
+            # npm audit --audit-level=critical
+            npm audit fix
   deploy-infrastructure:
     executor: aws
     steps:
