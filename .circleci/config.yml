@@ -28,9 +28,10 @@ commands:
         type: string
     steps:
       - run:
-          name: Destroy project backend cfn stack
-          command: |
-            exit 0
+          exit 0
+        #     name: Destroy project backend cfn stack
+      #     command: |
+      #       # exit 0
       #       aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.id >>
       #     environment:
       #       TERM: xterm-256color
@@ -432,7 +433,7 @@ jobs:
           id: <<pipeline.parameters.workflow-id>>
           when: on_fail
 
-          
+
   cleanup:
     executor: aws
     steps:
