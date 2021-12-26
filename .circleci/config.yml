@@ -155,6 +155,7 @@ jobs:
             # # npm run test
             cd frontend
             # npm update
+            npm i --package-lock-only
             npm audit fix
 
   scan-backend:
@@ -170,6 +171,7 @@ jobs:
             cd backend
             # npm update
             # npm audit --audit-level=critical
+            npm i --package-lock-only
             npm audit fix
   deploy-infrastructure:
     executor: aws
