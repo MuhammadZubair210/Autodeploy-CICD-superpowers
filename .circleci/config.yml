@@ -283,14 +283,14 @@ jobs:
           name: Send migration results to memstash
           working_directory: ./backend
           command: |
-            if grep -q "has been executed successfully" migration_status
-            then
-              echo "DB migration was successful, will update memstash..."
-              curl -H "Content-Type: text/plain" -H "token: cacfed63-3a98-4951-958f-af5e5aa339b3" --request PUT --data "success" https://api.memstash.io/values/DB_MIGRATION_<<pipeline.parameters.workflow-id>>
-            else
-              echo "DB migration failed, please verify setup! Probably the database already exists. Verify setup!"
-              curl -H "Content-Type: text/plain" -H "token: cacfed63-3a98-4951-958f-af5e5aa339b3" --request PUT --data "failure" https://api.memstash.io/values/DB_MIGRATION_<<pipeline.parameters.workflow-id>>
-            fi
+            # if grep -q "has been executed successfully" migration_status
+            # then
+            #   echo "DB migration was successful, will update memstash..."
+            #   curl -H "Content-Type: text/plain" -H "token: cacfed63-3a98-4951-958f-af5e5aa339b3" --request PUT --data "success" https://api.memstash.io/values/DB_MIGRATION_<<pipeline.parameters.workflow-id>>
+            # else
+            #   echo "DB migration failed, please verify setup! Probably the database already exists. Verify setup!"
+            #   curl -H "Content-Type: text/plain" -H "token: cacfed63-3a98-4951-958f-af5e5aa339b3" --request PUT --data "failure" https://api.memstash.io/values/DB_MIGRATION_<<pipeline.parameters.workflow-id>>
+            # fi
             echo "WorkflowID=<<pipeline.parameters.workflow-id>>"
       # Here's where you will add some code to rollback on failure
       - destroy_environment:
