@@ -30,7 +30,7 @@ commands:
       - run:
           name: Destroy project backend cfn stack
           command: |
-            return 0
+            exit 0
       #       aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.id >>
       #     environment:
       #       TERM: xterm-256color
