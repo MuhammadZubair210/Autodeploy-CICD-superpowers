@@ -8,7 +8,7 @@ https://udapeople-7861.s3.us-west-2.amazonaws.com/index.html
 https://d14rlz86hw5kdd.cloudfront.net
 
 4. [URL04]:
-http://18.236.222.150:3030
+ec2-35-87-84-134.us-west-2.compute.amazonaws.com:3030
 
 5. [URL05]:
-ec2-18-237-14-193.us-west-2.compute.amazonaws.com:9090/targets
+ec2-54-212-217-54.us-west-2.compute.amazonaws.com:9090/targets
